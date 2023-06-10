@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servidor-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: servidor-web
+  template:
+    metadata:
+      labels:
+        app: servidor-web
+    spec:
+      initContainers:
+        - name: copiar-archivos-html
+          image: diegovr10052000/archivoshtml-php:latest
+          command:
+            [
+              "sh",
+              "-c",
+              "cp -R /usr/share/nginx/html/* /archivos-html-compartidos/",
+            ]
+          volumeMounts:
+            - name: archivos-html
+              mountPath: /archivos-html-compartidos
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: archivos-html
+              mountPath: /usr/share/nginx/html
+        - name: php-fpm
+          image: php:fpm
+          volumeMounts:
+            - name: archivos-html
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: archivos-html
+          emptyDir: {}
