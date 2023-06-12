@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: phpadmin-config
 data:
-  PMA_HOST: 10.104.208.73
+  PMA_HOST: 10.96.215.164
   PMA_PORT: "3306"
