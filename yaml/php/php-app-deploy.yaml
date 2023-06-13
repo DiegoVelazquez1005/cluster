@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: php-app-container
-          image: diegovr10052000/prueba
+          image: diegovr10052000/proyecto
