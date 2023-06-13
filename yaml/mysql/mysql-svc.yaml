@@ -4,7 +4,7 @@ metadata:
   name: mysql-svc
 spec:
   selector:
-    run: mysql-pod
+    app: mysql
   ports:
     - protocol: TCP
       port: 3306

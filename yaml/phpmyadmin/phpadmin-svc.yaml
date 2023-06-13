@@ -5,8 +5,8 @@ metadata:
 spec:
   type: NodePort
   ports:
-    - protocol: TCP
-      port: 8099
+    - port: 8099
       targetPort: 80
   selector:
-    run: phpadmin-pod
+    app: phpadmin
+

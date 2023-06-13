@@ -1,9 +1,9 @@
 <?php
 // Conexión a la base de datos MySQL
-$servername = "10.96.215.164"; //cluster ip del servicio de mysql
+$servername = "10.109.180.44"; //cluster ip del servicio de mysql
 $username = "root";
 $password = "rootpassword";
-//$port = 3306;
+$port = 3306;
 $dbname = "clientes";
 
 // Crear conexión
@@ -23,7 +23,7 @@ $comentario = $_POST["comentario"];
 $sql = "INSERT INTO client (nombre, correo, comentario) VALUES ('$nombre', '$correo', '$comentario')";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Datos ingresados correctamente";
+    header("Location: index.html");
 } else {
     echo "Error al ingresar los datos: " . $conn->error;
 }

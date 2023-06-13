@@ -1,27 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    run: phpadmin-pod
   name: phpadmin-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: phpadmin-pod
+      app: phpadmin
   template:
     metadata:
       labels:
-        run: phpadmin-pod
+        app: phpadmin
     spec:
       containers:
-        - image: phpmyadmin
-          name: phpadmin-pod
-          envFrom:
-            - configMapRef:
-                name: phpadmin-config
-            - secretRef:
-                name: phpadmin-secret
-          resources: {}
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
+        - name: phpadmin-pod
+          image: phpmyadmin
+          ports:
+            - containerPort: 80
+          env:
+            - name: PMA_HOST
+              value: 10.109.180.44  # Dirección IP de tu servidor MySQL
+            - name: PMA_PORT
+              value: "3306"
+            - name: MYSQL_ROOT_USER
+              value: root
+            - name: MYSQL_ROOT_PASSWORD
+              value: rootpassword
+

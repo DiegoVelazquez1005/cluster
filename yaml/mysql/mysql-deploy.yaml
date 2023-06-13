@@ -1,36 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    run: mysql-pod
-  name: mysql-pod
+  name: mysql-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: mysql-pod
+      app: mysql
   template:
     metadata:
       labels:
-        run: mysql-pod
+        app: mysql
     spec:
       containers:
-        - image: mysql
-          name: mysql-pod
+        - name: mysql-pod
+          image: mysql
+          ports:
+            - containerPort: 3306
           envFrom:
             - configMapRef:
                 name: db-config
             - secretRef:
                 name: db-secret
-          resources: {}
-          ports:
-            - containerPort: 3306
           volumeMounts:
-            - name: mysql-data
+            - name: mysql-persistent-storage
               mountPath: /var/lib/mysql
       volumes:
-        - name: mysql-data
+        - name: mysql-persistent-storage
           persistentVolumeClaim:
             claimName: mysql-pvc
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
